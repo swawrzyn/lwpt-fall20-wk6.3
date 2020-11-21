@@ -1,6 +1,27 @@
 /**app.wxss**/
+
+/* @font-face {
+  font-family: 'BigShoulders';
+  src: url(https://ddz.s3.cn-northwest-1.amazonaws.com.cn/static/fonts/Montserrat-Regular.woff2) format("woff2"), url(https://ddz.s3.cn-northwest-1.amazonaws.com.cn/static/fonts/Montserrat-Regular.woff) format("woff"), url(https://ddz.s3.cn-northwest-1.amazonaws.com.cn/static/fonts/Montserrat-Regular.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
+} */
+
+@font-face {
+  font-family: 'BigShoulders';
+  src: url(https://cloud-minapp-37962.cloud.ifanrusercontent.com/1kgPNGjcAd4FKf2Y.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+
+
+
+
 .container {
-  font-family: monospace;
+  font-family: 'BigShoulders';
   background-size: cover;
   height: 100vh;
   padding: 100rpx 50rpx;

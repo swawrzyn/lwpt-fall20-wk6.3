@@ -22,4 +22,5 @@
     </view>
     <button form-type="reset">Submit</button>
   </form>
+  <!-- <view wx:if="{{platform === 'devtools'}}" style="height: 1000rpx; display: block;"></view> -->
 </view>

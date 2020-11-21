@@ -28,6 +28,13 @@ App({
         console.log('after get location fail', err);
       }
     })
+
+    const deviceInfo = wx.getSystemInfoSync();
+
+    this.data.platform = deviceInfo.platform;
+
   },
-  globalData: {},
+  globalData: {
+    platform: '',
+  },
 });

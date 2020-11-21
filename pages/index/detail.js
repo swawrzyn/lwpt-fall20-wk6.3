@@ -88,6 +88,13 @@ Page({
         }
       );
   },
+  onShareAppMessage: function () {
+    return {
+      title: this.data.movie.title,
+      path: `/pages/detail?id=${this.data.movie.id}`,
+      imageUrl: this.data.movie.image
+    }
+  },
   inputChange: function (e) {
     this.setData({
       inputVal: e.detail.value,
@@ -199,6 +206,16 @@ Page({
         const fileParams = { filePath: result.tempFilePaths[0] };
         const metadata = { categoryName: "movie_testing" };
 
+        // SHOW LOADING POPUP HERE
+        wx.showLoading({
+          title: 'Loading',
+          mask: true,
+          success: (result)=>{
+            
+          },
+          fail: ()=>{},
+          complete: ()=>{}
+        });
         File.upload(fileParams, metadata).then(
           (res) => {
             console.log("upload image res", res);
@@ -216,16 +233,24 @@ Page({
                 this.setData({
                   movie: res.data,
                 });
+                // STOP SHOWING LOADING
+                wx.hideLoading()
               },
               (err) => {
                 console.log("movie update err", err);
+                // STOP SHOWING LOADING
+                wx.hideLoading()
               }
             );
           },
           (err) => {
             console.log("upload err", err);
+            // STOP SHOWING LOADING
+            wx.hideLoading()
           }
         );
+
+
       },
       fail: (err) => {
         console.log("getPhoto err", err);

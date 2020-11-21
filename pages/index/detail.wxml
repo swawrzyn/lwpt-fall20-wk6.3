@@ -11,6 +11,7 @@
   <view class="title">
     <button wx:if="{{!movie.latitude}}" type="primary" bindtap="getLocation">Add Location</button>
     <map wx:else style="width: 500rpx; height: 500rpx;" latitude="{{movie.latitude}}" longitude="{{movie.longitude}}" markers="{{markers}}" bindmarkertap="tapMarker" bindtap="tapMap"></map>
+    <button open-type="share" type="warn">Share!</button>
   </view>
   <!-- <view class="title">Products</view>
   <view class="list">
