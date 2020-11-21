@@ -14,6 +14,7 @@ Page({
     inputRating: 1,
     userInfo: null,
     image: null,
+    markers: [],
   },
   onLoad: function (options) {
     // get currentUser information
@@ -38,6 +39,19 @@ Page({
       this.setData({
         movie: res.data,
       });
+
+      if (res.data.latitude) {
+        const markers = [{
+          id: 0,
+          width: 50,
+          height: 50,
+          latitude: res.data.latitude,
+          longitude: res.data.longitude,
+        }]
+        this.setData({
+          markers: markers,
+        })
+      }
     });
 
     // Getting all the reviews with movie_id == options.id
@@ -174,51 +188,90 @@ Page({
     console.log("take a photo!");
     wx.chooseImage({
       count: 1,
-      sizeType: ['original','compressed'],
-      sourceType: ['album'],
-      success: (result)=>{
-        console.log('getPhoto success', result);
+      sizeType: ["original", "compressed"],
+      sourceType: ["album"],
+      success: (result) => {
+        console.log("getPhoto success", result);
         // this.setData({
         //   image: result.tempFilePaths[0],
         // })
         const File = new wx.BaaS.File();
-        const fileParams = {filePath: result.tempFilePaths[0]};
-        const metadata = {categoryName: "movie_testing"};
+        const fileParams = { filePath: result.tempFilePaths[0] };
+        const metadata = { categoryName: "movie_testing" };
 
-        File.upload(fileParams, metadata).then((res) => {
-          console.log('upload image res', res);
-          const Movies = new wx.BaaS.TableObject('movies');
+        File.upload(fileParams, metadata).then(
+          (res) => {
+            console.log("upload image res", res);
+            const Movies = new wx.BaaS.TableObject("movies");
 
-          const movie = Movies.getWithoutData(this.data.movie.id);
+            const movie = Movies.getWithoutData(this.data.movie.id);
 
-          movie.set({
-            image: res.data.path,
-          })
+            movie.set({
+              image: res.data.path,
+            });
 
-          movie.update().then((res) => {
-            console.log('movie save res', res);
-            this.setData({
-              movie: res.data,
-            })
-          }, err => {
-            console.log('movie update err', err);
-          })
-
-
-        }, err => {
-          console.log('upload err', err);
-        })
+            movie.update().then(
+              (res) => {
+                console.log("movie save res", res);
+                this.setData({
+                  movie: res.data,
+                });
+              },
+              (err) => {
+                console.log("movie update err", err);
+              }
+            );
+          },
+          (err) => {
+            console.log("upload err", err);
+          }
+        );
       },
-      fail: (err)=>{
-        console.log('getPhoto err', err);
+      fail: (err) => {
+        console.log("getPhoto err", err);
       },
-      complete: ()=>{}
+      complete: () => {},
     });
   },
-  previewImage: function() {
+  previewImage: function () {
     wx.previewImage({
       current: this.data.image, // The http link of the current image
-      urls: [this.data.image] // The http links of the images to preview
-    })
+      urls: [this.data.image], // The http links of the images to preview
+    });
   },
+  getLocation: function () {
+    wx.chooseLocation({
+      success: (res) => {
+        console.log("get location success", res);
+        const location = {
+          address: res.address,
+          latitude: res.latitude,
+          longitude: res.longitude
+        };
+
+        const Movies = new wx.BaaS.TableObject('movies');
+
+        const movie = Movies.getWithoutData(this.data.movie.id);
+
+        movie.set(location);
+        
+        movie.update().then((res) => {
+          this.setData({
+            movie: res.data,
+          })
+        })
+      },
+    });
+  },
+  tapMarker: function(e) {
+    console.log('tapped a marker', e);
+  },
+  tapMap: function() {
+    wx.openLocation({
+      name: this.data.movie.title,
+      address: this.data.movie.address,
+      latitude: this.data.movie.latitude,
+      longitude: this.data.movie.longitude
+    })
+  }
 });

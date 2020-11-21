@@ -5,6 +5,8 @@ Page({
     items: [],
     scrollInto: "",
     inputVal: "",
+    currentLocation: {
+    }
   },
   onLoad: function () {
     const Movies = new wx.BaaS.TableObject("movies");
@@ -55,4 +57,11 @@ Page({
       inputVal: "",
     });
   },
+  chooseLocation: function() {
+    wx.chooseLocation({
+      success: (res) => {
+        console.log('get location success', res);
+      }
+    })
+  }
 });

@@ -3,7 +3,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "PT Product Dev - Week 6.2",
+    "navigationBarTitleText": "PT Product Dev - Week 6.3",
     "navigationBarTextStyle": "black"
   },
   "style": "v2",
@@ -25,5 +25,10 @@
         "text": "Me"
       }
     ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "Can I pleeeeease use loc?"
+    }
   }
 }

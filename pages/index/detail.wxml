@@ -8,6 +8,10 @@
     <image wx:else src="{{movie.image}}" mode="aspectFit" bindtap="previewImage">
     </image>
   </view>
+  <view class="title">
+    <button wx:if="{{!movie.latitude}}" type="primary" bindtap="getLocation">Add Location</button>
+    <map wx:else style="width: 500rpx; height: 500rpx;" latitude="{{movie.latitude}}" longitude="{{movie.longitude}}" markers="{{markers}}" bindmarkertap="tapMarker" bindtap="tapMap"></map>
+  </view>
   <!-- <view class="title">Products</view>
   <view class="list">
     <block wx:for="{{products}}" wx:for-item="product" wx:key="{{product.id}}">

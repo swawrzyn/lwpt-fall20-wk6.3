@@ -3,6 +3,9 @@
   <view class="title">
     Favourite Movie List
   </view>
+  <view class="title">
+    <button type="primary" bindtap="chooseLocation">Choose your location!</button>
+  </view>
   <scroll-view scroll-y="{{true}}" enable-flex="{{true}}" scroll-into-view="{{scrollInto}}" scroll-with-animation="{{true}}" style="height: 800rpx" class="list">
     <view bindtap="toMovie" wx:for="{{items}}" id="{{it.id}}" wx:for-item="it" wx:key="id" wx:for-index="idx" class="item">
       <view class="number" >
